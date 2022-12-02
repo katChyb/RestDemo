@@ -6,12 +6,14 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
-public class Users extends TestBase {
+public class GetUsers extends TestBase {
+
+    private static final String USERS = "/users";
 
     @Test
     public void shouldGetAllUsers() {
         when()
-                .get("https://jsonplaceholder.typicode.com/users").
+                .get(BASE_URL + USERS).
                 then()
                 .statusCode(200);
     }
@@ -19,7 +21,7 @@ public class Users extends TestBase {
     @Test
     public void shouldGetFistUser() {
         when()
-                .get("https://jsonplaceholder.typicode.com/users/1").
+                .get(BASE_URL + USERS + "/1").
                 then()
                 .statusCode(200);
     }
@@ -29,7 +31,7 @@ public class Users extends TestBase {
         given()
                 .pathParam("id", "1").
                 when()
-                .get("https://jsonplaceholder.typicode.com/users/{id}").
+                .get(BASE_URL + USERS + "/{id}").
                 then()
                 .statusCode(200);
     }
@@ -40,12 +42,11 @@ public class Users extends TestBase {
                 given()
                     .queryParam("username", "Bret").
                 when()
-                    .get("https://jsonplaceholder.typicode.com/users/1").
+                    .get(BASE_URL + USERS + "/1").
                 then()
                     .statusCode(200).extract().response();
 
         JsonPath jsonPath = response.jsonPath();
-        response.body();
 
         Assert.assertEquals(jsonPath.get("username"), "Bret");
         Assert.assertEquals(jsonPath.get("address.geo.lat"), "-37.3159");

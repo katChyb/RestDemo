@@ -11,8 +11,8 @@ public class UpdateUsers extends TestBase {
 
     String body = """
 {
-    "name": "Mateusz Tadla",
-    "username": "mtadla",
+    "name": "Kat Chy",
+    "username": "katchy",
     "email": "Sincere@april.biz"
 }
 """;
@@ -32,7 +32,7 @@ public class UpdateUsers extends TestBase {
         JsonPath jsonPath = response.jsonPath();
 
         Assert.assertEquals(jsonPath.get("id").toString(), "1");
-        Assert.assertEquals(jsonPath.get("username"), "mtadla");
+        Assert.assertEquals(jsonPath.get("username"), "katchy");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class UpdateUsers extends TestBase {
         JsonPath jsonPath = response.jsonPath();
 
         Assert.assertEquals(jsonPath.get("id").toString(), "1");
-        Assert.assertEquals(jsonPath.get("username"), "mtadla");
+        Assert.assertEquals(jsonPath.get("username"), "katchy");
     }
 
     @Test

@@ -11,8 +11,8 @@ public class CreateUsers extends TestBase {
 
     String body = """
 {
-    "name": "Mateusz Tadla",
-    "username": "mtadla",
+    "name": "Katarzyna Chybczynska",
+    "username": "katchy",
     "email": "Sincere@april.biz",
     "address": {
         "street": "Kulas Light",
@@ -48,6 +48,6 @@ public class CreateUsers extends TestBase {
 
         JsonPath jsonPath = response.jsonPath();
 
-        Assert.assertEquals(jsonPath.get("username"), "mtadla");
+        Assert.assertEquals(jsonPath.get("username"), "katchy");
     }
 }

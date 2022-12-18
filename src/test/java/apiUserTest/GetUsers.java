@@ -1,7 +1,11 @@
+package apiUserTest;
+
+import general.TestBase;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -13,7 +17,7 @@ public class GetUsers extends TestBase {
     @Test
     public void shouldGetAllUsers() {
         when()
-                .get(BASE_URL + USERS).
+                .get(TestBase.BASE_URL + USERS).
                 then()
                 .statusCode(200);
     }
@@ -21,7 +25,7 @@ public class GetUsers extends TestBase {
     @Test
     public void shouldGetFistUser() {
         when()
-                .get(BASE_URL + USERS + "/1").
+                .get(TestBase.BASE_URL + USERS + "/1").
                 then()
                 .statusCode(200);
     }
@@ -31,7 +35,7 @@ public class GetUsers extends TestBase {
         given()
                 .pathParam("id", "1").
                 when()
-                .get(BASE_URL + USERS + "/{id}").
+                .get(TestBase.BASE_URL + USERS + "/{id}").
                 then()
                 .statusCode(200);
     }
@@ -42,7 +46,7 @@ public class GetUsers extends TestBase {
                 given()
                     .queryParam("username", "Bret").
                 when()
-                    .get(BASE_URL + USERS + "/1").
+                    .get(TestBase.BASE_URL + USERS + "/1").
                 then()
                     .statusCode(200).extract().response();
 

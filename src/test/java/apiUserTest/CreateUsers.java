@@ -1,8 +1,12 @@
+package apiUserTest;
+
+import general.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 
 import static io.restassured.RestAssured.given;
 
@@ -41,7 +45,7 @@ public class CreateUsers extends TestBase {
                         .body(body)
                         .contentType(ContentType.JSON).
                 when()
-                        .post(BASE_URL + USERS).
+                        .post(TestBase.BASE_URL + USERS).
                 then()
                         .statusCode(201)
                         .extract().response();

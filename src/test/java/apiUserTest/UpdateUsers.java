@@ -1,8 +1,12 @@
+package apiUserTest;
+
+import general.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 
 import static io.restassured.RestAssured.given;
 
@@ -24,7 +28,7 @@ public class UpdateUsers extends TestBase {
                         .body(body)
                         .contentType(ContentType.JSON).
                 when()
-                        .put(BASE_URL + USERS + "/1").
+                        .put(TestBase.BASE_URL + USERS + "/1").
                 then()
                         .statusCode(200)
                         .extract().response();
@@ -42,7 +46,7 @@ public class UpdateUsers extends TestBase {
                         .body(body)
                         .contentType(ContentType.JSON).
                 when()
-                        .patch(BASE_URL + USERS + "/1").
+                        .patch(TestBase.BASE_URL + USERS + "/1").
                 then()
                         .statusCode(200)
                         .extract().response();
@@ -59,7 +63,7 @@ public class UpdateUsers extends TestBase {
                 .body(body)
                 .contentType(ContentType.JSON).
         when()
-                .delete(BASE_URL + USERS + "/1").
+                .delete(TestBase.BASE_URL + USERS + "/1").
         then()
                 .statusCode(200);
     }

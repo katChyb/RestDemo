@@ -1,37 +1,40 @@
 package apiWeatherTest;
 
+import general.TestBase;
+import general.WeatherHelper;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
 
-public class weatherForLocation {
+public class weatherForLocation extends TestBase {
 
-    @Test
+
     @ParameterizedTest(name = "{0} has been verified")
     @MethodSource("general.DataProviderWeatherTest#testDataLocations")
-    public void shouldGETweatherForGivenLocation(String location) {
-        RequestSpecification specification = given()
-                .param("q", location)
-                .param("appid", "b1b15e88fa797225412429c1c50c122a1")
-                .log()
-                .all();
+    public void shouldGETweatherForGivenLocationReqRespSpec(String location) {
 
+        WeatherHelper weatherHelper = new WeatherHelper();
 
-        ResponseSpecification responseSpecification = RestAssured.expect();
-        responseSpecification.log().all();
-        responseSpecification.statusCode(200);
+        Response response =
+                given()
+                        .spec(weatherHelper.getRequestSpecForWetherTest(location))
+                        .when()
+                        .get(TestBase.BASE_WEATHER_URL)
+                        .then()
+                        .spec(weatherHelper.getResponseSpecForWetherTest())
+                        .extract().response();
 
-        given()
-                .spec(specification)
-                .when()
-                .get("https://samples.openweathermap.org/data/2.5/weather")
-                .then()
-                .spec(responseSpecification);
+        JsonPath jsonPath = response.jsonPath();
+        Assert.assertEquals(location, jsonPath.get("name"));
+
     }
 
 
@@ -45,7 +48,7 @@ public class weatherForLocation {
         given()
                 .spec(specification)
                 .when()
-                .get("https://samples.openweathermap.org/data/2.5/weather")
+                .get(TestBase.BASE_WEATHER_URL)
                 .then()
                 .log()
                 .all()

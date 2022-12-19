@@ -12,9 +12,9 @@ public class DataProviderWeatherTest {
     private static Stream<Arguments> testDataLocations() {
         log.info(">>>>>>>> Data provider started <<<<<<<<<");
         return Stream.of(
-                Arguments.of("London,uk"),
-                Arguments.of("Oxford,uk"),
-                Arguments.of("Gdańsk, pl")
+                Arguments.of("London"),
+                Arguments.of("Oxford"),
+                Arguments.of("Gdańsk")
         );
     }
 }

@@ -1,6 +1,6 @@
 package apiUserTest;
 
-import general.TestBase;
+import utils.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;

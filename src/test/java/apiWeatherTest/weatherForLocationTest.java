@@ -1,40 +1,42 @@
 package apiWeatherTest;
 
-import general.TestBase;
-import general.WeatherHelper;
-import io.restassured.RestAssured;
+import utils.TestBase;
+import utils.ReqResSpecifications;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
-public class weatherForLocation extends TestBase {
+public class weatherForLocationTest extends TestBase {
 
-
+//https://www.swtestacademy.com/junit5-parallel-test-execution/
+    @Execution(ExecutionMode.CONCURRENT)
     @ParameterizedTest(name = "{0} has been verified")
-    @MethodSource("general.DataProviderWeatherTest#testDataLocations")
+    @MethodSource("utils.DataProviderWeatherTest#testDataLocations")
     public void shouldGETweatherForGivenLocationReqRespSpec(String location) {
 
-        WeatherHelper weatherHelper = new WeatherHelper();
+        ReqResSpecifications reqResSpecifications = new ReqResSpecifications();
 
         Response response =
                 given()
-                        .spec(weatherHelper.getRequestSpecForWetherTest(location))
-                        .when()
-                        .get(TestBase.BASE_WEATHER_URL)
-                        .then()
-                        .spec(weatherHelper.getResponseSpecForWetherTest())
+                        .spec(reqResSpecifications.getRequestSpecForWetherTest(location))
+                .when()
+                        .get(System.getProperty("baseWeatherURL"))
+                .then()
+                        .spec(reqResSpecifications.getResponseSpecForWetherTest())
                         .extract().response();
 
         JsonPath jsonPath = response.jsonPath();
         Assert.assertEquals(location, jsonPath.get("name"));
-
     }
 
 
@@ -48,7 +50,7 @@ public class weatherForLocation extends TestBase {
         given()
                 .spec(specification)
                 .when()
-                .get(TestBase.BASE_WEATHER_URL)
+                .get(System.getProperty("baseWeatherURL"))
                 .then()
                 .log()
                 .all()

@@ -1,4 +1,4 @@
-package general;
+package utils;
 
 import org.junit.jupiter.params.provider.Arguments;
 import org.slf4j.Logger;
